@@ -21,13 +21,20 @@ public abstract class TextDecorator implements TextConverter {
     }
 
     /**
-     * Converts the method according to the converter type.
-     * Additionally, runs this method on the wrappee.
+     * Calls method *trueConvert*, should not be overridden
+     * After converting, runs this method on the wrappee.
      * @param text input
-     * @return text converter by all the wrappees
+     * @return text converted by all the wrappees
      */
     @Override
     public String convert(String text){
-        return wrappee.convert(text);
+        return wrappee.convert((text));
     }
+
+    /**
+     * The method that the decorator calls to actually convert the text
+     * @param text input
+     * @return converted text
+     */
+    public abstract String trueConvert(String text);
 }
