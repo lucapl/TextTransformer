@@ -10,14 +10,14 @@ public abstract class TextDecorator implements TextConverter {
     /**
      * Wrapped text converter
      */
-    protected TextConverter wrappee;
+    private TextConverter wrappee;
 
     /**
      * Creates an instance of the class, with another text converter inside
      * @param wrappee a text converter which is part of the decorator pipeline
      */
     public TextDecorator(TextConverter wrappee){
-        this.wrappee = wrappee;
+        this.setWrappee(wrappee);
     }
 
     /**
@@ -28,7 +28,7 @@ public abstract class TextDecorator implements TextConverter {
      */
     @Override
     public String convert(String text){
-        return wrappee.convert((text));
+        return getWrappee().convert((text));
     }
 
     /**
@@ -37,4 +37,12 @@ public abstract class TextDecorator implements TextConverter {
      * @return converted text
      */
     public abstract String trueConvert(String text);
+
+    public void setWrappee(TextConverter wrappee) {
+        this.wrappee = wrappee;
+    }
+
+    private TextConverter getWrappee() {
+        return wrappee;
+    }
 }

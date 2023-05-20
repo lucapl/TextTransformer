@@ -1,9 +1,15 @@
 package pl.put.poznan.transformer.logic;
 
+import pl.put.poznan.transformer.logic.decorator.TextDecorator;
+
 /**
  * Controls the program logic, creates the decorated converters based on the transforms
  */
 public class TextTransformer {
+    /**
+     * Maps transformations to textConverters
+     */
+    private TextConverterFactory textConverterFactory = new TextConverterFactory();
 
     /**
      * The transformations to be performed based on the request
@@ -24,7 +30,7 @@ public class TextTransformer {
      * @return transformed text
      */
     public String transform(String text){
-        // of course, normally it would do something based on the transforms
-        return text.toUpperCase();
+        TextConverter textConverter = textConverterFactory.createConverter(transforms);
+        return textConverter.convert(text);
     }
 }
