@@ -13,10 +13,10 @@
 
     <groupId>pl.put.poznan</groupId>
     <artifactId>text-transformer</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3.1</version>
 
 	<properties>
-        <java.version>11</java.version>
+        <java.version>14</java.version>
     </properties>
 
     
@@ -51,6 +51,14 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>14</source>
+                    <target>14</target>
+                </configuration>
             </plugin>
         </plugins>
     </build>
