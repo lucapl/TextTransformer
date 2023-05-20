@@ -15,15 +15,16 @@ public class TextConverterFactory {
      * @param transforms array containing string that describe an appropriate transformation
      * @return the fully wrapped text converter
      */
-    public TextConverter createConverter(String[] transforms){
-        List<Conversions> conversions = conversionsList(List.of(transforms));
+    public TextConverter createConverter(List<String> transforms){
+        List<Conversions> conversions = conversionsList(transforms);
         Collections.reverse(conversions);
 
         TextConverter textConverter = null;
         TextConverter wrapee = null;
         for (var conversion : conversions){
             textConverter = createSpecific(conversion);
-            if (textConverter instanceof TextDecorator tD && wrapee != null) {
+            if (textConverter instanceof TextDecorator && wrapee != null) {
+                TextDecorator tD = (TextDecorator) textConverter;
                 tD.setWrappee(wrapee);
             }
             wrapee = textConverter;

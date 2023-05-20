@@ -2,6 +2,7 @@ package pl.put.poznan.transformer.rest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,14 +44,20 @@ public class TextTransformerController {
             produces = "application/json")
     public String get(@RequestBody JsonNode payload) throws JsonProcessingException {
         JsonNode text = payload.get(text_arg);
-        JsonNode transforms = payload.get(transforms_arg);
+        ArrayNode transformsNode = (ArrayNode) payload.get(transforms_arg);
+        List<String> transforms = new ArrayList<>();
+        for (JsonNode transform : transformsNode){
+            transforms.add(transform.asText());
+        }
         // log the parameters
         logger.debug(text.toPrettyString());
-        logger.debug(transforms.toPrettyString());
+        logger.debug(transforms.toString());
 
 
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(packOutput(text.asText(),text.asText(),transforms));
+        TextTransformer textTransformer = new TextTransformer(transforms);
+        String output = textTransformer.transform(text.asText());
+        return mapper.writeValueAsString(packOutput(text.asText(),output,transformsNode));
     }
 
     /**

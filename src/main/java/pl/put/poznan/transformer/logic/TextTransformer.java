@@ -2,6 +2,8 @@ package pl.put.poznan.transformer.logic;
 
 import pl.put.poznan.transformer.logic.decorator.TextDecorator;
 
+import java.util.List;
+
 /**
  * Controls the program logic, creates the decorated converters based on the transforms
  */
@@ -14,13 +16,13 @@ public class TextTransformer {
     /**
      * The transformations to be performed based on the request
      */
-    private final String[] transforms;
+    private final List<String> transforms;
 
     /**
      * Creates the transformer
      * @param transforms to be performed on text
      */
-    public TextTransformer(String[] transforms){
+    public TextTransformer(List<String> transforms){
         this.transforms = transforms;
     }
 
