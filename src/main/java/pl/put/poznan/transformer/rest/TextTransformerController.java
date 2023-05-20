@@ -50,8 +50,8 @@ public class TextTransformerController {
             transforms.add(transform.asText());
         }
         // log the parameters
-        logger.debug(text.toPrettyString());
-        logger.debug(transforms.toString());
+        logger.debug("Input is: "+text.toPrettyString());
+        logger.debug("Desired transformations: " + transforms.toString());
 
 
         ObjectMapper mapper = new ObjectMapper();
@@ -70,7 +70,7 @@ public class TextTransformerController {
     private Map<String,Object> packOutput(String input,String output,JsonNode usedTransforms){
         Map<String,Object> map = new HashMap<>();
         map.put("used_transforms",usedTransforms);
-        map.put("output","Hello " + output);
+        map.put("output",output);
         map.put("input",input);
         return map;
     }

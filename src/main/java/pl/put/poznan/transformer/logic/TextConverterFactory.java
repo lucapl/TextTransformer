@@ -91,13 +91,13 @@ public class TextConverterFactory {
      */
     public TextConverter createSpecific(Conversions conversion){
         switch (conversion){
-            case CASE_UPPER: return new TextDecorator(null){
+            default: return new TextDecorator(null){
                 @Override
                 public String trueConvert(String text){
                     return text + "Invalid";
                 }
             };
+
         }
-        return null;
     }
 }

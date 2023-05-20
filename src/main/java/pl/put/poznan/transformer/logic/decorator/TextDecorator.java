@@ -28,7 +28,9 @@ public abstract class TextDecorator implements TextConverter {
      */
     @Override
     public String convert(String text){
-        return getWrappee().convert((text));
+        text = trueConvert(text);
+        if (wrappee != null) text = getWrappee().convert((text));
+        return text;
     }
 
     /**
