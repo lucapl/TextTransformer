@@ -1,6 +1,7 @@
 # TextTransformers
 ![status](https://github.com/lucapl/TextTransformer/actions/workflows/build_and_test.yml/badge.svg)
 
+## Documentation
 [![Javadoc](https://img.shields.io/badge/JavaDoc-Online-green)](https://lucapl.github.io/TextTransformer/javadoc/)
 
 
