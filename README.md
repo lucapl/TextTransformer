@@ -1,4 +1,5 @@
 # TextTransformers
+![status](https://github.com/lucapl/TextTransformer/actions/workflows/build_and_test.yml/badge.svg)
 
 ![](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExYzg1ZDkxZGI5NzNiOTY2YjMzNGI0YjI3NDQwNDFiZjkxZTFlZWFmNyZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/7c0bE2bfJrfos/giphy.gif)
 
