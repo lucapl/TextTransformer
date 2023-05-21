@@ -1,4 +1,4 @@
-name:test_and_build
+name: Build and test project
 
 on: [push]
 
