@@ -37,32 +37,22 @@ public class FloattoTextConverter extends NumberConverter{
         }
         String result = "";
         if(number>1){
-            result += convertNumber((int)(number)) + " and " + convertFloat(number%1);
+            return convertNumber((int)(number)) + " and " + convertFloat(number%1);
         }
         if (number < 0) {
-            result += "minus " + convertFloat(-number);
+            return "minus " + convertFloat(-number);
         }
-        if (number >0.1){
-            result += convertNumber((int)(number*10)) + " tenths";
+
+        int newnum = (int)(number * 1000);
+        if (newnum % 100 != 0) {
+            return convertNumber(newnum) + " thousandths";
         }
-        if (number == 0.1){
-            result += convertNumber((int)(number*10)) + " tenth";
+        if (newnum % 10 != 0) {
+            return convertNumber(newnum/10) + " hundredths";
         }
-        if (number >0.01){
-            result += convertNumber((int)(number*100)) + " hundredths";
+        else {
+            return convertNumber(newnum/100) + " tenths";
         }
-        if (number ==0.01){
-            result += convertNumber((int)(number*100)) + " hundredth";
-        }
-        if (number >0.001){
-            result += convertNumber((int)(number*1000)) + " thousandths";
-        }
-        if (number == 0.001){
-            result += convertNumber((int)(number*1000)) + " thousandth";
-        }
-        if (number<0.001){
-            result += "Number too small to convert. Please choose above 0.001.";
-        }
-        return result;
+        
     }
 }

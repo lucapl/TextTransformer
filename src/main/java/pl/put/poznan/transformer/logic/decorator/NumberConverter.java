@@ -36,28 +36,23 @@ public abstract class NumberConverter extends TextDecorator{
         }
         String result = "";
         if (number < 0) {
-            result += "minus ";
-            number = -number;
+            return "minus " + convertNumber(number = -number);
         }
         if (number >= 1000000) {
-            result += convertNumber(number / 1000000) + " million ";
-            number %= 1000000;
+            return convertNumber(number / 1000000) + " million " + (number % 1000000 != 0 ?  convertNumber(number %= 1000000) : "");
         }
         if (number >= 1000) {
-            result += convertNumber(number / 1000) + " thousand ";
-            number %= 1000;
+            return convertNumber(number / 1000) + " thousand " + (number % 1000 != 0 ? convertNumber(number %= 1000) : "");
         }
         if (number >= 100) {
-            result += convertNumber(number / 100) + " hundred ";
-            number %= 100;
+            return convertNumber(number / 100) + " hundred " + (number % 100 != 0 ? convertNumber(number %= 100) : "");
         }
         if (number >= 20) {
-            result += tens[number / 10] + " ";
-            number %= 10;
+            return tens[number / 10] + " " + (number % 10 != 0 ?  convertNumber(number %= 10) : "");
         }
         if (number >= 1) {
-            result += ones[number] + " ";
+            return ones[number];
         }
-        return result;
+        return "ERROR";
     }
 }
