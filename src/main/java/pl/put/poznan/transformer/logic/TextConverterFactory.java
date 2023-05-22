@@ -2,6 +2,7 @@ package pl.put.poznan.transformer.logic;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pl.put.poznan.transformer.logic.decorator.LatexAdapter;
 import pl.put.poznan.transformer.logic.decorator.RepeatsRemover;
 import pl.put.poznan.transformer.logic.decorator.TextDecorator;
 import pl.put.poznan.transformer.rest.TextTransformerController;
@@ -108,6 +109,7 @@ public class TextConverterFactory {
         logger.debug("Creating a converter: "+ conversion.toString());
         switch (conversion){
             case REMOVE_REPEATS: return new RepeatsRemover(null);
+            case LATEX: return new LatexAdapter(null);
             default: return new TextDecorator(null){
                 @Override
                 public String trueConvert(String text){
