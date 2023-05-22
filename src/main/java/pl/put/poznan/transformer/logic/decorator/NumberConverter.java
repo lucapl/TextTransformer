@@ -40,16 +40,20 @@ public abstract class NumberConverter extends TextDecorator{
             number = -number;
         }
         if (number >= 1000000) {
-            result += convertNumber(number / 1000000) + " million " + convertNumber(number %= 1000000);
+            result += convertNumber(number / 1000000) + " million ";
+            number %= 1000000;
         }
         if (number >= 1000) {
-            result += convertNumber(number / 1000) + " thousand " + convertNumber(number %= 1000);
+            result += convertNumber(number / 1000) + " thousand ";
+            number %= 1000;
         }
         if (number >= 100) {
-            result += convertNumber(number / 100) + " hundred " + convertNumber(number %= 100);
+            result += convertNumber(number / 100) + " hundred ";
+            number %= 100;
         }
         if (number >= 20) {
-            result += tens[number / 10] + " " + convertNumber(number %= 10);
+            result += tens[number / 10] + " ";
+            number %= 10;
         }
         if (number >= 1) {
             result += ones[number] + " ";
