@@ -89,15 +89,18 @@ public class TextConverterFactory {
      * @param conversion to be made
      * @return corresponding TextConverter
      */
-    public TextConverter createSpecific(Conversions conversion){
-        switch (conversion){
-            default: return new TextDecorator(null){
-                @Override
-                public String trueConvert(String text){
-                    return text + "Invalid";
-                }
-            };
-
+    public TextConverter createSpecific(Conversions conversion) {
+        switch (conversion) {
+            case ACRONYMISE:
+                return new Acronymizer(null);
+            case ACRONYMS_UNWIND:
+                return new AcronymUnwinder(null);
         }
+        return new TextDecorator(null){
+            @Override
+            public String trueConvert(String text){
+                return text + "Invalid";
+            }
+        };
     }
 }
