@@ -9,22 +9,15 @@ import java.util.regex.Pattern;
 
 public class Acronymizer extends TextDecorator {
 
-    private HashMap<String, String> acronyms;
+    private AcronymManager manager;
 
     Acronymizer(TextDecorator wrapee) {
         super(wrapee);
-        acronyms = new AcronymManager().getAcronyms();
+        manager = new AcronymManager();
     }
 
     @Override
     public String trueConvert(String text) {
-        String result = text;
-        for (Map.Entry<String, String> acronym : acronyms.entrySet()) {
-            String pattern = "(?i)" + acronym.getKey();
-            Pattern compiledPattern = Pattern.compile(pattern);
-            Matcher matcher = compiledPattern.matcher(result);
-            result = matcher.replaceAll(acronym.getValue());
-        }
-        return result;
+        return manager.acronimize(text);
     }
 }
