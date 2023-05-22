@@ -1,6 +1,10 @@
 package pl.put.poznan.transformer.logic;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import pl.put.poznan.transformer.logic.decorator.RepeatsRemover;
 import pl.put.poznan.transformer.logic.decorator.TextDecorator;
+import pl.put.poznan.transformer.rest.TextTransformerController;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,11 +15,16 @@ import java.util.List;
  */
 public class TextConverterFactory {
     /**
+     * for loggin information
+     */
+    private static final Logger logger = LoggerFactory.getLogger(TextConverterFactory.class);
+    /**
      * Create the converter based on transforms
      * @param transforms array containing string that describe an appropriate transformation
      * @return the fully wrapped text converter
      */
     public TextConverter createConverter(List<String> transforms){
+        logger.debug("Creating a converter");
         List<Conversions> conversions = conversionsList(transforms);
         Collections.reverse(conversions);
 
@@ -24,11 +33,13 @@ public class TextConverterFactory {
         for (var conversion : conversions){
             textConverter = createSpecific(conversion);
             if (textConverter instanceof TextDecorator && wrapee != null) {
+                logger.debug("Adding a wrappee "+wrapee+" to "+textConverter);
                 TextDecorator tD = (TextDecorator) textConverter;
                 tD.setWrappee(wrapee);
             }
             wrapee = textConverter;
         }
+        logger.debug("Converter created");
         return textConverter;
     }
 
@@ -68,7 +79,9 @@ public class TextConverterFactory {
             case "reals": return Conversions.NUMS_REAL;
             case "unrepeat": return Conversions.REMOVE_REPEATS;
         }
-        throw new IllegalArgumentException("No transformation for: " + transform);
+        //throw new IllegalArgumentException("No transformation for: " + transform);
+        logger.info("NO TRANSFORM FOR: " + transform);
+        return null;
     }
 
     /**
@@ -77,9 +90,11 @@ public class TextConverterFactory {
      * @return array containing Conversions to be made
      */
     public List<Conversions> conversionsList(List<String> transforms){
+        logger.debug("Mapping string transforms to enumeration");
         List<Conversions> conversions = new ArrayList<>();
         for ( var transform : transforms){
-            conversions.add(mapTransform(transform));
+            Conversions conversion = mapTransform(transform);
+            if(conversion != null) conversions.add(conversion);
         }
         return conversions;
     }
@@ -90,7 +105,9 @@ public class TextConverterFactory {
      * @return corresponding TextConverter
      */
     public TextConverter createSpecific(Conversions conversion){
+        logger.debug("Creating a converter: "+ conversion.toString());
         switch (conversion){
+            case REMOVE_REPEATS: return new RepeatsRemover(null);
             default: return new TextDecorator(null){
                 @Override
                 public String trueConvert(String text){
