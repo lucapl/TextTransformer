@@ -3,7 +3,7 @@ package pl.put.poznan.transformer.logic.decorator;
 import pl.put.poznan.transformer.logic.TextConverter;
 
 public abstract class NumberConverter extends TextDecorator{
-    public static String[] ones = {"", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"};
+    public static String[] ones = {"", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine","ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"};
 
     public static String[] tens = {"", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty","ninety"};
     public static String[] fractions = {"", "tenths", "hundredths", "thousandths"};

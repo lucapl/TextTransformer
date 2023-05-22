@@ -44,15 +44,12 @@ public class FloattoTextConverter extends NumberConverter{
         }
 
         int newnum = (int)(number * 1000);
-        if (newnum % 100 != 0) {
-            return convertNumber(newnum) + " thousandths";
-        }
-        if (newnum % 10 != 0) {
-            return convertNumber(newnum/10) + " hundredths";
-        }
-        else {
+        if (newnum % 100 == 0) {
             return convertNumber(newnum/100) + " tenths";
         }
-        
+        if (newnum % 10 == 0){
+            return convertNumber(newnum/10) + " hundredths";
+        }
+        return convertNumber(newnum) + " thousandths";
     }
 }
