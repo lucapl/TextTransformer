@@ -1,5 +1,8 @@
 package pl.put.poznan.transformer.logic;
 
+/**
+ * Describes various text conversions that can be performed
+ */
 public enum Conversions {
     CASE_UPPER,
     CASE_LOWER,

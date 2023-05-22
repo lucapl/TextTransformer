@@ -1,5 +1,7 @@
 package pl.put.poznan.transformer.logic;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.put.poznan.transformer.logic.decorator.TextDecorator;
 
 import java.util.List;
@@ -27,12 +29,19 @@ public class TextTransformer {
     }
 
     /**
+     * for loggin information
+     */
+    private static final Logger logger = LoggerFactory.getLogger(TextTransformer.class);
+
+    /**
      * Transforms the text
      * @param text initial text
      * @return transformed text
      */
     public String transform(String text){
+        logger.debug("Requesting a new text converter");
         TextConverter textConverter = textConverterFactory.createConverter(transforms);
+        logger.debug("Requesting text conversion from the converter");
         return textConverter.convert(text);
     }
 }
