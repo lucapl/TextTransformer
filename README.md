@@ -24,6 +24,8 @@ The REST api takes JSON as input in the form of:
 ```
 The GET requests should be sent to http://localhost:8080/api/convert
 ## Possible transformations:
+- "ints", "integers" -> convert integers into text,
+- "reals" -> convert fractions into text,
 - "unrepeat" -> remove repeated words in vicinity
 ### planned transforms
 - "up","upper" -> uppercase,
@@ -34,5 +36,3 @@ The GET requests should be sent to http://localhost:8080/api/convert
 - "acr", "acronymise" -> convert selected words into acronyms,
 - "unwind" -> convert selected acronyms into full words,
 - "ltx", "latex" -> convert latex characters,
-- "ints", "integers" -> convert integers into text,
-- "reals" -> convert fractions into text,

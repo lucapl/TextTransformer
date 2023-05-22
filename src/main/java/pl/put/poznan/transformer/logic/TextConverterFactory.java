@@ -1,5 +1,7 @@
 package pl.put.poznan.transformer.logic;
 
+import pl.put.poznan.transformer.logic.decorator.FloattoTextConverter;
+import pl.put.poznan.transformer.logic.decorator.InttoTextConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.put.poznan.transformer.logic.decorator.RepeatsRemover;
@@ -115,6 +117,10 @@ public class TextConverterFactory {
                 }
             };
 
+            case NUMS_INTS:
+                return new InttoTextConverter(null);
+            case NUMS_REAL:
+                return new FloattoTextConverter(null);
         }
     }
 }
