@@ -17,16 +17,6 @@ public abstract class NumberConverter extends TextDecorator{
         super(wrappee);
     }
 
-    /**
-     * Creates an instance of the class, with another text converter inside
-     *
-     * @param wrappee a text converter which is part of the decorator pipeline
-     */
-
-
-    @Override
-    public abstract String trueConvert(String text);
-
     String convertNumber(int number) {
         if (number >= 1000000000){
             return "Number too big to convert. Please choose below 1 billion.";
