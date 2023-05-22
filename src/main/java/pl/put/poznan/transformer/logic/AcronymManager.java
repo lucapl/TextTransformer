@@ -1,6 +1,7 @@
 package pl.put.poznan.transformer.logic;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -13,6 +14,8 @@ public class AcronymManager {
         acronyms.put("for exmaple", "e.g.");
         acronyms.put("amoung others", "i.a.");
         acronyms.put("and so on", "aso");
+        acronyms.put("profesor", "prof.");
+        acronyms.put("doctor", "dr.");
     }
 
     private HashMap<String, String> getExpansions() {
@@ -32,14 +35,24 @@ public class AcronymManager {
      * @return
      */
     private String applyMapping(HashMap<String, String> mapping, String text) {
-        String result = text;
+        String[] words = text.split(" ");
+        String[] result = text.split(" ");
         for (Map.Entry<String, String> acronym : mapping.entrySet()) {
-            String pattern = "(?i)" + acronym.getKey();
-            Pattern compiledPattern = Pattern.compile(pattern);
-            Matcher matcher = compiledPattern.matcher(result);
-            result = matcher.replaceAll(acronym.getValue());
+            // continue if string doesn't contain given word
+            if (!text.toLowerCase().contains(acronym.getKey())) {
+                continue;
+            }
+
+            for (int i = 0; i < words.length; i++) {
+                if (words[i].equalsIgnoreCase(acronym.getKey())) {
+                } else if (Character.isUpperCase(words[i].charAt(0))) {
+                    result[i] = acronym.getValue().substring(0,1).toUpperCase() + acronym.getValue().substring(1);
+                } else {
+                    result[i] = acronym.getValue();
+                }
+            }
         }
-        return result;
+        return String.join(" ", result);
     }
 
     /**
