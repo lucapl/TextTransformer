@@ -5,7 +5,7 @@ import pl.put.poznan.transformer.logic.TextConverter;
 public abstract class NumberConverter extends TextDecorator{
     public static String[] ones = {"", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"};
 
-    public static String[] tens = {"", "teen", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty","ninety"};
+    public static String[] tens = {"", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty","ninety"};
     public static String[] fractions = {"", "tenths", "hundredths", "thousandths"};
 
     /**
@@ -16,6 +16,13 @@ public abstract class NumberConverter extends TextDecorator{
     public NumberConverter(TextConverter wrappee) {
         super(wrappee);
     }
+
+    /**
+     * Creates an instance of the class, with another text converter inside
+     *
+     * @param wrappee a text converter which is part of the decorator pipeline
+     */
+
 
     @Override
     public abstract String trueConvert(String text);

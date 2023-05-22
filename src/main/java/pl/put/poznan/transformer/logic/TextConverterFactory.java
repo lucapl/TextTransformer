@@ -1,5 +1,7 @@
 package pl.put.poznan.transformer.logic;
 
+import pl.put.poznan.transformer.logic.decorator.FloattoTextConverter;
+import pl.put.poznan.transformer.logic.decorator.InttoTextConverter;
 import pl.put.poznan.transformer.logic.decorator.TextDecorator;
 
 import java.util.ArrayList;
@@ -98,6 +100,10 @@ public class TextConverterFactory {
                 }
             };
 
+            case NUMS_INTS:
+                return new InttoTextConverter(null);
+            case NUMS_REAL:
+                return new FloattoTextConverter(null);
         }
     }
 }
