@@ -19,9 +19,7 @@ public class LatexAdapter extends TextDecorator{
     @Override
     public String trueConvert(String text){
         for(var entry: latexExpressions.entrySet()){
-            System.out.println(text);
             text = text.replace(entry.getKey(), entry.getValue());
-            System.out.println(text);
         }
         return text;
     }

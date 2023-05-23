@@ -115,7 +115,9 @@ public class TextConverterFactory {
                 return new AcronymUnwinder(null);
             case REMOVE_REPEATS: return new RepeatsRemover(null);
             case LATEX: return new LatexAdapter(null);
-            default: return new TextDecorator(null){
+            default:
+                logger.info("Empty convesrions, creating empty converter");
+                return new TextDecorator(null){
                 @Override
                 public String trueConvert(String text){
                     return text;
