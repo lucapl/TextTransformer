@@ -82,7 +82,7 @@ public class AcronymManager {
      * @param text text on replacements will be performed
      * @return
      */
-    public String acronimize(String text) {
-        return applyMapping(getExpansions(), text);
+    public String acronymize(String text) {
+        return applyMapping(acronyms, text);
     }
 }
