@@ -106,15 +106,19 @@ public class TextConverterFactory {
      * @param conversion to be made
      * @return corresponding TextConverter
      */
-    public TextConverter createSpecific(Conversions conversion){
+    public TextConverter createSpecific(Conversions conversion) {
         logger.debug("Creating a converter: "+ conversion.toString());
-        switch (conversion){
+        switch (conversion) {
+            case ACRONYMISE:
+                return new Acronymizer(null);
+            case ACRONYMS_UNWIND:
+                return new AcronymUnwinder(null);
             case REMOVE_REPEATS: return new RepeatsRemover(null);
             case LATEX: return new LatexAdapter(null);
             default: return new TextDecorator(null){
                 @Override
                 public String trueConvert(String text){
-                    return text + "Invalid";
+                    return text;
                 }
             };
 
