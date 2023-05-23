@@ -34,24 +34,38 @@ public class AcronymManager {
      * @return
      */
     private String applyMapping(HashMap<String, String> mapping, String text) {
-        String[] words = text.split(" ");
-        String[] result = text.split(" ");
-        for (Map.Entry<String, String> acronym : mapping.entrySet()) {
-            // continue if string doesn't contain given word
-            if (!text.toLowerCase().contains(acronym.getKey())) {
-                continue;
-            }
+        StringBuffer result = new StringBuffer(text);
 
-            for (int i = 0; i < words.length; i++) {
-                if (!words[i].equalsIgnoreCase(acronym.getKey())) {
-                } else if (Character.isUpperCase(words[i].charAt(0))) {
-                    result[i] = acronym.getValue().substring(0,1).toUpperCase() + acronym.getValue().substring(1);
-                } else {
-                    result[i] = acronym.getValue();
-                }
+        for (Map.Entry<String, String> acronym : mapping.entrySet()) {
+            String patternStr = "(?i)\\b" + acronym.getKey();
+            String replacement = acronym.getValue();
+
+            Pattern pattern = Pattern.compile(patternStr);
+            Matcher matcher = pattern.matcher(result);
+
+            result = new StringBuffer();
+            while (matcher.find()) {
+                String match = matcher.group();
+                matcher.appendReplacement(result, getRightCase(match, replacement) );
+            }
+            matcher.appendTail(result);
+        }
+
+        return result.toString();
+    }
+
+    private String getRightCase(String match, String replacement) {
+        if (Character.isUpperCase(match.charAt(0))) {
+            if (replacement.length() < 2) {
+                return replacement.toUpperCase();
+            } else {
+                String firstLetter = replacement.substring(0, 1).toUpperCase();
+                String restOfWord = replacement.substring(1).toLowerCase();
+                return firstLetter + restOfWord;
             }
         }
-        return String.join(" ", result);
+
+        return replacement;
     }
 
     /**
@@ -60,7 +74,7 @@ public class AcronymManager {
      * @return
      */
     public String unwindAcronyms(String text) {
-        return applyMapping(acronyms, text);
+        return applyMapping(getExpansions(), text);
     }
 
     /**
