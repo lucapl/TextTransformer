@@ -1,7 +1,6 @@
 package pl.put.poznan.transformer.logic;
 
-import pl.put.poznan.transformer.logic.decorator.FloattoTextConverter;
-import pl.put.poznan.transformer.logic.decorator.InttoTextConverter;
+import pl.put.poznan.transformer.logic.decorator.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.put.poznan.transformer.logic.decorator.LatexAdapter;
@@ -123,6 +122,11 @@ public class TextConverterFactory {
                 return new InttoTextConverter(null);
             case NUMS_REAL:
                 return new FloattoTextConverter(null);
+
+            case CASE_CAPITAL:
+            case CASE_UPPER:
+            case CASE_LOWER:
+                return new TextCapitalizer(null,conversion);
         }
     }
 }
