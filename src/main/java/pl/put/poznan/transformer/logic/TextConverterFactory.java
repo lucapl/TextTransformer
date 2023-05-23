@@ -131,6 +131,9 @@ public class TextConverterFactory {
             case CASE_UPPER:
             case CASE_LOWER:
                 return new TextCapitalizer(null,conversion);
+            case REVERSE:
+            case REVERSE_PRESERVE_CASE:
+                return new TextReverser(null,conversion);
         }
     }
 }
