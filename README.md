@@ -19,7 +19,7 @@ The REST api takes JSON as input in the form of:
 ```
 {
 "text": "INPUT",
-"transforms": ["TRANSFORM1","TRANSFORM2","TRANSFORM3"]
+"transforms": ["TRANSFORM1","TRANSFORM2","TRANSFORM3",...]
 }
 ```
 The GET requests should be sent to http://localhost:8080/api/convert
