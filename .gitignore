@@ -29,5 +29,8 @@ replay_pid*
 # intellij folder
 .idea
 
+# vscode folder
+.vscode
+
 # mdj file
 *.mdj

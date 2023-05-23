@@ -19,21 +19,20 @@ The REST api takes JSON as input in the form of:
 ```
 {
 "text": "INPUT",
-"transforms": ["TRANSFORM1","TRANSFORM2","TRANSFORM3"]
+"transforms": ["TRANSFORM1","TRANSFORM2","TRANSFORM3",...]
 }
 ```
 The GET requests should be sent to http://localhost:8080/api/convert
 ## Possible transformations:
--
-### planned transforms
 - "up","upper" -> uppercase,
 - "low", "lower" -> lowercase,
-- "cap", "capital" -> capitalise,
+- "cap", "capital" -> capitalise
+- "ints", "integers" -> convert integers into text,
+- "reals" -> convert fractions into text,
+- "unrepeat" -> remove repeated words in vicinity,
+- "ltx", "latex" -> convert latex characters,
+### planned transforms
 - "rev", "reverser" -> reverse,
 - "rev_no_case", "reverse_preserve_case" -> reverse, but preserve the cases of letters at each index,
 - "acr", "acronymise" -> convert selected words into acronyms,
 - "unwind" -> convert selected acronyms into full words,
-- "ltx", "latex" -> convert latex characters,
-- "ints", "integers" -> convert integers into text,
-- "reals" -> convert fractions into text,
-- "unrepeat" -> remove repeated words in vicinity
