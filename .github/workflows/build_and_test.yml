@@ -16,17 +16,8 @@ jobs:
           cache: maven
       - name: Validate, build and run test
         run: mvn --batch-mode --update-snapshots verify
-  package:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v3
-        with:
-          java-version: '16'
-          distribution: 'temurin'
-      - run: mvn --batch-mode --update-snapshots verify
-      - run: mkdir staging && cp target/*.jar staging
+      - name: Create a folder for artifact and copy it there
+        run: mkdir staging && cp target/*.jar staging
       - uses: actions/upload-artifact@v3
         with:
           name: Package
