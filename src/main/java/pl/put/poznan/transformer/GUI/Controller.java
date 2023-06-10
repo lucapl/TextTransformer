@@ -1,3 +1,5 @@
+package pl.put.poznan.transformer.GUI;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
