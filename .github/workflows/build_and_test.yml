@@ -16,8 +16,7 @@ jobs:
           cache: maven
       - name: Validate, build and run test
         run: mvn --batch-mode --update-snapshots verify
-
-package:
+  package:
     runs-on: ubuntu-latest
 
     steps:
