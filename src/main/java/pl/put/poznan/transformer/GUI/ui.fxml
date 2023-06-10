@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="Controller">
+    <top>
+        <MenuBar>
+            <Menu text="File">
+                <MenuItem text="Open" onAction="#openFile"/>
+                <MenuItem text="Save" onAction="#saveFile"/>
+                <SeparatorMenuItem/>
+                <MenuItem text="Exit" onAction="#exit"/>
+            </Menu>
+        </MenuBar>
+    </top>
+    <center>
+        <TextArea fx:id="textArea" />
+    </center>
+</BorderPane>
+
