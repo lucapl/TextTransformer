@@ -14,6 +14,15 @@
 ## Description
 For people working with text data, our Text Transformer application will allow you to transform text data (e.g. change case, eliminate duplicates, etc.). The application will be available via GUI as well as remote API, thanks to which it will be possible to integrate it with existing tools.
 
+## GUI
+The app offers a graphical user interface where a text can be input 
+and transformations can be specified. It works in the same manner as the REST API.
+
+![gui](https://i.imgur.com/cUNjSOZ.png)
+
+The GUI is also capable of opening and saving simple text files.
+
+
 ## Input form
 The REST api takes JSON as input in the form of:
 ```
