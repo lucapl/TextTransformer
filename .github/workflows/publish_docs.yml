@@ -20,6 +20,12 @@ jobs:
       - name: Generate Javadoc with Maven
         run: mvn javadoc:aggregate
         shell: bash
+      - name: Create a folder for artifact and copy it there
+        run: mkdir docs && cp -r target/site/apidocs docs
+      - uses: actions/upload-artifact@v3
+        with:
+          name: javadoc
+          path: docs 
       - name: Deploy to GitHub Page 🚀 with Maven
         uses: JamesIves/github-pages-deploy-action@v4.4.2
         with:
