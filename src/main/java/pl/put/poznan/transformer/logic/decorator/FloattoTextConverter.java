@@ -35,7 +35,7 @@ public class FloattoTextConverter extends NumberConverter {
      * Converts a float number to text representation
      *
      * @param number the float number to convert
-     * @return the text representation of the float numbe
+     * @return the text representation of the float number
      */
     private String convertFloat(float number) {
         if (number == 0.0) {
