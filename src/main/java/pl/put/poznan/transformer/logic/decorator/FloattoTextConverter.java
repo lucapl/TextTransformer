@@ -7,9 +7,10 @@ import pl.put.poznan.transformer.logic.TextConverter;
 import static java.lang.Double.parseDouble;
 import static java.lang.Float.parseFloat;
 
-public class FloattoTextConverter extends NumberConverter{
+public class FloattoTextConverter extends NumberConverter {
 
     private static final Logger logger = LoggerFactory.getLogger(FloattoTextConverter.class);
+
     /**
      * Creates an instance of the class, with another text converter inside
      *
@@ -35,26 +36,33 @@ public class FloattoTextConverter extends NumberConverter{
         return result;
     }
 
-    private String convertFloat(double number){
-        logger.debug("Number is: " + number);
+    /**
+     * Converts a float number to text representation
+     *
+     * @param number the float number to convert
+     * @return the text representation of the float number
+     */
+    private String convertFloat(float number) {
+        //logger.debug("Number is: " + number);
         if (number == 0.0) {
             return "zero";
         }
         String result = "";
-        if(number>1){
-            return convertNumber((int)(number)) + " and " + convertFloat(number%1);
+        if (number > 1) {
+            return convertNumber((int) (number)) + " and " + convertFloat(number % 1);
         }
         if (number < 0) {
             return "minus " + convertFloat(-number);
         }
 
-        logger.debug("Float accuracy up to a thousandths");
+        //logger.debug("Float accuracy up to a thousandths");
         int newnum = (int)(number * 1000);
+
         if (newnum % 100 == 0) {
-            return convertNumber(newnum/100) + " tenths";
+            return convertNumber(newnum / 100) + " tenths";
         }
-        if (newnum % 10 == 0){
-            return convertNumber(newnum/10) + " hundredths";
+        if (newnum % 10 == 0) {
+            return convertNumber(newnum / 10) + " hundredths";
         }
         return convertNumber(newnum) + " thousandths";
     }

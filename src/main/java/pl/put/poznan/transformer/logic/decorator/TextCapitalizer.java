@@ -6,10 +6,14 @@ import pl.put.poznan.transformer.logic.decorator.TextDecorator;
 
 public class TextCapitalizer extends TextDecorator {
 
-    private Conversions option;
-    public TextCapitalizer(TextConverter wrappee,Conversions option) {
-        super(wrappee);
-        this.option = option;
+
+    /**
+     * Creates an instance of the class, with another text component inside
+     *
+     * @param textComponent a text component which is part of the decorator pipeline
+     */
+    public TextCapitalizer(TextComponent textComponent) {
+        super(textComponent);
     }
 
     @Override
@@ -30,6 +34,12 @@ public class TextCapitalizer extends TextDecorator {
         return result.toString();
     }
 
+    /**
+     * Transforms a word based on the specified option
+     *
+     * @param word the word to transform
+     * @return the transformed word
+     */
     private String transformWord(String word) {
         switch (option) {
             case CASE_UPPER:
@@ -43,6 +53,12 @@ public class TextCapitalizer extends TextDecorator {
         }
     }
 
+    /**
+     * Capitalizes a word by making the first letter uppercase and the rest lowercase
+     *
+     * @param word the word to capitalize
+     * @return the capitalized word
+     */
     private String capitalizeWord(String word) {
         if (word.isEmpty()) {
             return word;
@@ -50,3 +66,4 @@ public class TextCapitalizer extends TextDecorator {
         return Character.toUpperCase(word.charAt(0)) + word.substring(1).toLowerCase();
     }
 }
+

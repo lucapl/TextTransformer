@@ -5,10 +5,10 @@ import org.slf4j.LoggerFactory;
 import pl.put.poznan.transformer.logic.TextConverter;
 import pl.put.poznan.transformer.logic.TextTransformer;
 
-public abstract class NumberConverter extends TextDecorator{
-    public static String[] ones = {"", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine","ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"};
+public abstract class NumberConverter extends TextDecorator {
+    public static String[] ones = {"", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"};
 
-    public static String[] tens = {"", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty","ninety"};
+    public static String[] tens = {"", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"};
     public static String[] fractions = {"", "tenths", "hundredths", "thousandths"};
 
     private static final Logger logger = LoggerFactory.getLogger(NumberConverter.class);
@@ -22,10 +22,17 @@ public abstract class NumberConverter extends TextDecorator{
         super(wrappee);
     }
 
+    /**
+     * Converts an integer number to its text representation
+     *
+     * @param number the integer number to convert
+     * @return the text representation of the integer number
+     */
     String convertNumber(int number) {
-        if (number >= 1000000000){
-            logger.info("Number too big to convert. Please choose below 1 billion.");
-            return Integer.toString(number);
+
+        if (number >= 1000000000) {
+            return "Number too big to convert. Please choose below 1 billion.";
+
         }
         if (number == 0) {
             return "zero";
@@ -35,7 +42,7 @@ public abstract class NumberConverter extends TextDecorator{
             return "minus " + convertNumber(number = -number);
         }
         if (number >= 1000000) {
-            return convertNumber(number / 1000000) + " million " + (number % 1000000 != 0 ?  convertNumber(number %= 1000000) : "");
+            return convertNumber(number / 1000000) + " million " + (number % 1000000 != 0 ? convertNumber(number %= 1000000) : "");
         }
         if (number >= 1000) {
             return convertNumber(number / 1000) + " thousand " + (number % 1000 != 0 ? convertNumber(number %= 1000) : "");
@@ -44,7 +51,7 @@ public abstract class NumberConverter extends TextDecorator{
             return convertNumber(number / 100) + " hundred " + (number % 100 != 0 ? convertNumber(number %= 100) : "");
         }
         if (number >= 20) {
-            return tens[number / 10] + " " + (number % 10 != 0 ?  convertNumber(number %= 10) : "");
+            return tens[number / 10] + " " + (number % 10 != 0 ? convertNumber(number %= 10) : "");
         }
         if (number >= 1) {
             return ones[number];
