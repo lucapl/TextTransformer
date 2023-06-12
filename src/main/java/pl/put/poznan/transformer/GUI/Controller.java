@@ -16,6 +16,7 @@ import pl.put.poznan.transformer.logic.TextTransformer;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+
 import java.nio.file.Files;
 import java.util.Scanner;
 import java.util.logging.Logger;
@@ -26,7 +27,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import java.io.IOException;
+
 import java.nio.file.Files;
+import java.util.Scanner;
+import java.util.logging.Logger;
+
 
 import java.util.Arrays;
 import java.util.List;
@@ -43,7 +48,7 @@ public class Controller {
 
     @FXML
     private Text outputTextTransformer;
-
+   
     @FXML
     private Button saveButton;
 
@@ -52,6 +57,8 @@ public class Controller {
 
     @FXML
     private Button openButton;
+
+    private File currentFile;
 
     /**
      * Function for setting up things which needs to be set up after launch of application
@@ -70,8 +77,6 @@ public class Controller {
             saveFileAs(event);
         });
     }
-
-    private File currentFile;
 
     /**
      * Opens a files
