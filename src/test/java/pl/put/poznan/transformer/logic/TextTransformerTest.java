@@ -45,4 +45,22 @@ class TextTransformerTest {
         assertEquals("John Smith \\& Sons",latex.transform("John Smith & Sons"));
         assertEquals("what is \\$delta",latex.transform("what is $delta"));
     }
+
+    /**
+     * Test multiple transforms
+     */
+    @Test
+    public void multipleTransformsTest(){
+        TextTransformer textTransformer = new TextTransformer(Arrays.asList(
+                "unrepeat",
+                "ltx",
+                "ints",
+                "reals",
+                "up",
+                "rev_no_case"
+        ));
+        assertEquals(
+                "$\\NO$\\ SHtDERdNUH Owt YTFIf &\\ XiS Ytfif HTIM$\\ NhOÏJ ÂÂÂ,NHâj NHoj",
+                textTransformer.transform("John Jâhn,âââ Jïohn $mith 56 56 & 0.52 $on$"));
+    }
 }
