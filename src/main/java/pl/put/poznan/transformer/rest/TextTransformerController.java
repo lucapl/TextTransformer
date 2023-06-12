@@ -13,11 +13,11 @@ import pl.put.poznan.transformer.logic.TextTransformer;
 import java.util.*;
 
 
-@RestController
-@RequestMapping("/api")
 /**
  * Controls the REST api calls and returns for the application
  */
+@RestController
+@RequestMapping("/api")
 public class TextTransformerController {
 
     /**
