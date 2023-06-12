@@ -10,6 +10,7 @@ import javafx.stage.FileChooser;
 import pl.put.poznan.transformer.logic.TextTransformer;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Scanner;
 import java.util.logging.Logger;
@@ -36,9 +37,19 @@ public class Controller {
         fileChooser.setTitle("Open Text File");
         File file = fileChooser.showOpenDialog(null);
         if (file != null) {
+            textToEdit.clear();
             try {
-                String content = new String(Files.readAllBytes(file.toPath()));
-                textToEdit.setText(content);
+                FileInputStream fileReader = new FileInputStream(file);
+                InputStreamReader isr = new InputStreamReader(fileReader, StandardCharsets.UTF_8);
+                BufferedReader bufferedReader = new BufferedReader(isr);
+
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    textToEdit.appendText(line+'\n');
+                }
+
+                // Close the file reader
+                bufferedReader.close();
             } catch (IOException exception) {
                 exception.printStackTrace();
             }
