@@ -31,5 +31,18 @@ class TextTransformerTest {
         assertEquals("Ϻ", unrepeat.transform("Ϻ Ϻ Ϻ Ϻ Ϻ Ϻ").strip());
     }
 
-   
+    /**
+     * Test the LatexAdapter transformer
+     */
+    @Test
+    public void latexAdapterTest(){
+        TextTransformer latex = new TextTransformer(Arrays.asList("latex"));
+        // test & -> \&
+        assertEquals("\\&",latex.transform("&"));
+        // test $ -> \$
+        assertEquals("\\$",latex.transform("$"));
+        // test in context
+        assertEquals("John Smith \\& Sons",latex.transform("John Smith & Sons"));
+        assertEquals("what is \\$delta",latex.transform("what is $delta"));
+    }
 }
