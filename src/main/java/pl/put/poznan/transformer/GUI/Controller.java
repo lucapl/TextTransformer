@@ -6,7 +6,10 @@ import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
-import java.io.File;
+import java.io.*;
+import java.nio.file.Files;
+import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class Controller {
     @FXML
@@ -18,14 +21,24 @@ public class Controller {
     @FXML
     private Text outputTextTransformer;
 
-    public void openFile(ActionEvent e) {
+    public void openFile(ActionEvent e) throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Text File");
         File file = fileChooser.showOpenDialog(null);
-
         if (file != null) {
-            // Read the file and populate the text area
-            // Code to read the file content and set it to the text area goes here
+                // Read the file and populate the text area
+                // Code to read the file content and set it to the text area goes here
+            textToEdit.clear();
+            try {
+                BufferedReader reader = new BufferedReader(new FileReader(file));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    textToEdit.appendText(line+'\n');
+                }
+                reader.close();
+            } catch (IOException ex){
+                ex.printStackTrace();
+            }
         }
     }
 
