@@ -49,6 +49,8 @@ class TextTransformerControllerTest {
         rest.get(payload);
         // test if text field converted to string
         verify(text,atLeast(1)).asText();
+        // test if transforms field was iterated over
+        verify(args,atLeast(1)).elements();
         // test if transforms arguments converted to text
         verify(arg1,times(1)).asText();
     }

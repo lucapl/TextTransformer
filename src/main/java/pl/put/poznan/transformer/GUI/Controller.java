@@ -14,14 +14,12 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import pl.put.poznan.transformer.logic.TextTransformer;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.Scanner;
+import java.util.logging.Logger;
+
 
 import java.util.Arrays;
 import java.util.List;
@@ -36,12 +34,14 @@ public class Controller {
 
     @FXML
     private Text outputTextTransformer;
-
+   
     @FXML
     private Button saveButton;
 
     @FXML
-    public MenuItem saveAsItem;
+    private MenuItem saveAsItem;
+  
+    private File currentFile;
 
     /**
      * Function for setting up things which needs to be set up after launch of application
@@ -60,17 +60,24 @@ public class Controller {
         });
     }
 
-    private File currentFile;
-
-    public void openFile(ActionEvent e) {
+    public void openFile(ActionEvent e) throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Text File");
         File file = fileChooser.showOpenDialog(null);
-
         if (file != null) {
+            textToEdit.clear();
             try {
-                String content = new String(Files.readAllBytes(file.toPath()));
-                textToEdit.setText(content);
+                FileInputStream fileReader = new FileInputStream(file);
+                InputStreamReader isr = new InputStreamReader(fileReader, StandardCharsets.UTF_8);
+                BufferedReader bufferedReader = new BufferedReader(isr);
+
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    textToEdit.appendText(line+'\n');
+                }
+
+                // Close the file reader
+                bufferedReader.close();
             } catch (IOException exception) {
                 exception.printStackTrace();
             }
