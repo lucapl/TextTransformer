@@ -30,8 +30,24 @@ public class Controller {
     @FXML
     private Button saveButton;
 
+    @FXML
+    public MenuItem saveAsItem;
+
+    /**
+     * Function for setting up things which needs to be set up after launch of application
+     */
     public void setup() {
         setAccelerator(saveButton, KeyCode.S);
+    }
+
+    /**
+     * Function for setting up things which needs to be set up before staring main application
+     */
+    public void preSetup() {
+        saveAsItem.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.SHIFT_DOWN, KeyCombination.CONTROL_DOWN));
+        saveAsItem.setOnAction(event -> {
+            saveFileAs(event);
+        });
     }
 
     private File currentFile;
