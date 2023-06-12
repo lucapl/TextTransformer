@@ -3,13 +3,23 @@ package pl.put.poznan.transformer.GUI;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import pl.put.poznan.transformer.logic.TextTransformer;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.util.Scanner;
 import java.util.logging.Logger;
+
+import java.io.IOException;
+import java.nio.file.Files;
+
+import java.util.Arrays;
+import java.util.List;
+
 
 public class Controller {
     @FXML
@@ -26,18 +36,11 @@ public class Controller {
         fileChooser.setTitle("Open Text File");
         File file = fileChooser.showOpenDialog(null);
         if (file != null) {
-                // Read the file and populate the text area
-                // Code to read the file content and set it to the text area goes here
-            textToEdit.clear();
             try {
-                BufferedReader reader = new BufferedReader(new FileReader(file));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    textToEdit.appendText(line+'\n');
-                }
-                reader.close();
-            } catch (IOException ex){
-                ex.printStackTrace();
+                String content = new String(Files.readAllBytes(file.toPath()));
+                textToEdit.setText(content);
+            } catch (IOException exception) {
+                exception.printStackTrace();
             }
         }
     }
@@ -53,9 +56,27 @@ public class Controller {
         }
     }
 
+    public void copySelectedText() {
+        String selectedText = textToEdit.getSelectedText();
+        if (!selectedText.isEmpty()) {
+            Clipboard clipboard = Clipboard.getSystemClipboard();
+            ClipboardContent content = new ClipboardContent();
+            content.putString(selectedText);
+            clipboard.setContent(content);
+            outputTextTransformer.setText("Chosen text: \n" + selectedText);
+        }
+
+    }
+
     public void saveFileAs(ActionEvent e) {}
 
-    public void applyTransform(ActionEvent e) {}
+    private void transformText(String input, List<String> transforms){
+        TextTransformer textTransformer = new TextTransformer(transforms);
+        outputTextTransformer.setText(textTransformer.transform(input));
+    }
+    public void applyTransform(ActionEvent e) {
+        transformText(textToEdit.getText(), Arrays.asList(textTransforms.getText().split(",")));
+    }
 
     public void createNewFile(ActionEvent e) {}
 

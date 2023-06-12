@@ -34,6 +34,7 @@
    <bottom>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <buttons>
+            <Button text="Copy Selected Text" onAction="#copySelectedText" />
           <Button mnemonicParsing="false" onAction="#saveFile" text="Save" />
             <Button mnemonicParsing="false" onAction="#applyTransform" text="Apply transform" />
         </buttons>

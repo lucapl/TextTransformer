@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.put.poznan.transformer.logic.TextConverter;
 
+import static java.lang.Double.parseDouble;
 import static java.lang.Float.parseFloat;
 
 public class FloattoTextConverter extends NumberConverter{
@@ -24,7 +25,7 @@ public class FloattoTextConverter extends NumberConverter{
         String result = "";
         for (String part : parts) {
             try {
-                float number = parseFloat(part);
+                double number = parseDouble(part);
                 result += convertFloat(number) + " ";
             } catch (NumberFormatException e) {
                 result += part + " ";
@@ -34,7 +35,8 @@ public class FloattoTextConverter extends NumberConverter{
         return result;
     }
 
-    private String convertFloat(float number){
+    private String convertFloat(double number){
+        logger.debug("Number is: " + number);
         if (number == 0.0) {
             return "zero";
         }
