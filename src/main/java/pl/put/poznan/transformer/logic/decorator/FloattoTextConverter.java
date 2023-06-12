@@ -10,6 +10,7 @@ import static java.lang.Float.parseFloat;
 public class FloattoTextConverter extends NumberConverter {
 
     private static final Logger logger = LoggerFactory.getLogger(FloattoTextConverter.class);
+
     /**
      * Creates an instance of the class, with another text converter inside
      *
@@ -35,7 +36,6 @@ public class FloattoTextConverter extends NumberConverter {
         return result;
     }
 
-
     /**
      * Converts a float number to text representation
      *
@@ -54,7 +54,6 @@ public class FloattoTextConverter extends NumberConverter {
         if (number < 0) {
             return "minus " + convertFloat(-number);
         }
-
 
         //logger.debug("Float accuracy up to a thousandths");
         int newnum = (int)(number * 1000);
