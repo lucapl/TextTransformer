@@ -109,7 +109,7 @@ public class Controller {
         if (currentFile != null) {
             try {
                 FileWriter writer = new FileWriter(currentFile);
-                writer.write(textToEdit.getText());
+                writer.write(outputTextTransformer.getText());
                 writer.close();
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -132,7 +132,7 @@ public class Controller {
         if (file != null) {
             try {
                 FileWriter writer = new FileWriter(file);
-                writer.write(textToEdit.getText());
+                writer.write(outputTextTransformer.getText());
                 writer.close();
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -145,6 +145,9 @@ public class Controller {
         }
     }
 
+    /**
+     * Apply transform on selected data
+     */
     public void copySelectedText() {
         String selectedText = textToEdit.getSelectedText();
         if (!selectedText.isEmpty()) {
@@ -152,9 +155,13 @@ public class Controller {
             ClipboardContent content = new ClipboardContent();
             content.putString(selectedText);
             clipboard.setContent(content);
-            outputTextTransformer.setText("Chosen text: \n" + selectedText);
+            transformText(selectedText);//"Chosen text: \n" + selectedText);
         }
 
+    }
+
+    private void transformText(String input){
+        transformText(input,Arrays.asList(textTransforms.getText().split(",")));
     }
 
     private void transformText(String input, List<String> transforms){
@@ -167,14 +174,14 @@ public class Controller {
      * @param e event
      */
     public void applyTransform(ActionEvent e) {
-        transformText(textToEdit.getText(), Arrays.asList(textTransforms.getText().split(",")));
+        transformText(textToEdit.getText());
     }
 
     public void createNewFile(ActionEvent e) {}
 
     /**
      * Exits from app
-     * @param event
+     * @param e event
      */
     public void exit(ActionEvent e) {
         System.exit(0);
