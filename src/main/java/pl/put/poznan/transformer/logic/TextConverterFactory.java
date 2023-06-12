@@ -1,9 +1,9 @@
 package pl.put.poznan.transformer.logic;
 
-import pl.put.poznan.transformer.logic.decorator.FloattoTextConverter;
-import pl.put.poznan.transformer.logic.decorator.InttoTextConverter;
+import pl.put.poznan.transformer.logic.decorator.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pl.put.poznan.transformer.logic.decorator.LatexAdapter;
 import pl.put.poznan.transformer.logic.decorator.RepeatsRemover;
 import pl.put.poznan.transformer.logic.decorator.TextDecorator;
 import pl.put.poznan.transformer.rest.TextTransformerController;
@@ -106,14 +106,21 @@ public class TextConverterFactory {
      * @param conversion to be made
      * @return corresponding TextConverter
      */
-    public TextConverter createSpecific(Conversions conversion){
+    public TextConverter createSpecific(Conversions conversion) {
         logger.debug("Creating a converter: "+ conversion.toString());
-        switch (conversion){
+        switch (conversion) {
+            case ACRONYMISE:
+                return new Acronymizer(null);
+            case ACRONYMS_UNWIND:
+                return new AcronymUnwinder(null);
             case REMOVE_REPEATS: return new RepeatsRemover(null);
-            default: return new TextDecorator(null){
+            case LATEX: return new LatexAdapter(null);
+            default:
+                logger.info("Empty convesrions, creating empty converter");
+                return new TextDecorator(null){
                 @Override
                 public String trueConvert(String text){
-                    return text + "Invalid";
+                    return text;
                 }
             };
 
@@ -121,6 +128,14 @@ public class TextConverterFactory {
                 return new InttoTextConverter(null);
             case NUMS_REAL:
                 return new FloattoTextConverter(null);
+
+            case CASE_CAPITAL:
+            case CASE_UPPER:
+            case CASE_LOWER:
+                return new TextCapitalizer(null,conversion);
+            case REVERSE:
+            case REVERSE_PRESERVE_CASE:
+                return new TextReverser(null,conversion);
         }
     }
 }

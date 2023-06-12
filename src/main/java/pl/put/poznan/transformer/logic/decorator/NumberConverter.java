@@ -1,12 +1,17 @@
 package pl.put.poznan.transformer.logic.decorator;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.put.poznan.transformer.logic.TextConverter;
+import pl.put.poznan.transformer.logic.TextTransformer;
 
 public abstract class NumberConverter extends TextDecorator {
     public static String[] ones = {"", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"};
 
     public static String[] tens = {"", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"};
     public static String[] fractions = {"", "tenths", "hundredths", "thousandths"};
+
+    private static final Logger logger = LoggerFactory.getLogger(NumberConverter.class);
 
     /**
      * Creates an instance of the class, with another text converter inside
@@ -24,8 +29,10 @@ public abstract class NumberConverter extends TextDecorator {
      * @return the text representation of the integer number
      */
     String convertNumber(int number) {
+
         if (number >= 1000000000) {
             return "Number too big to convert. Please choose below 1 billion.";
+
         }
         if (number == 0) {
             return "zero";
@@ -49,6 +56,7 @@ public abstract class NumberConverter extends TextDecorator {
         if (number >= 1) {
             return ones[number];
         }
-        return "ERROR";
+        logger.info("some error with number conversion");
+        return Integer.toString(number);
     }
 }

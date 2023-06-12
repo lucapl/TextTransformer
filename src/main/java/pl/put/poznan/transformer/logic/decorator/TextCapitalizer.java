@@ -1,4 +1,11 @@
+package pl.put.poznan.transformer.logic.decorator;
+
+import pl.put.poznan.transformer.logic.Conversions;
+import pl.put.poznan.transformer.logic.TextConverter;
+import pl.put.poznan.transformer.logic.decorator.TextDecorator;
+
 public class TextCapitalizer extends TextDecorator {
+
 
     /**
      * Creates an instance of the class, with another text component inside
@@ -10,9 +17,8 @@ public class TextCapitalizer extends TextDecorator {
     }
 
     @Override
-    public String getText() {
-        String text = super.getText();
-        String[] words = text.split("\\s+");
+    public String trueConvert(String text) {
+        String[] words = text.split(" ");
         StringBuilder result = new StringBuilder();
 
         for (int i = 0; i < words.length; i++) {
@@ -35,13 +41,12 @@ public class TextCapitalizer extends TextDecorator {
      * @return the transformed word
      */
     private String transformWord(String word) {
-        String option = getOption();
         switch (option) {
-            case "upper":
+            case CASE_UPPER:
                 return word.toUpperCase();
-            case "lower":
+            case CASE_LOWER:
                 return word.toLowerCase();
-            case "capital":
+            case CASE_CAPITAL:
                 return capitalizeWord(word);
             default:
                 return word;

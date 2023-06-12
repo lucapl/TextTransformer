@@ -4,11 +4,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
-@SpringBootApplication(scanBasePackages = {"pl.put.poznan.transformer.rest"})
 /**
  * This class represents the main entry point of the Text Transformer application.
  * It controls the program flow by launching the REST API using Spring Boot.
  */
+@SpringBootApplication(scanBasePackages = {"pl.put.poznan.transformer.rest"})
 public class TextTransformerApplication {
 
     /**

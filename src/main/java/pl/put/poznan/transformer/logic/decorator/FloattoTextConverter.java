@@ -1,11 +1,15 @@
 package pl.put.poznan.transformer.logic.decorator;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.put.poznan.transformer.logic.TextConverter;
 
+import static java.lang.Double.parseDouble;
 import static java.lang.Float.parseFloat;
 
 public class FloattoTextConverter extends NumberConverter {
 
+    private static final Logger logger = LoggerFactory.getLogger(FloattoTextConverter.class);
     /**
      * Creates an instance of the class, with another text converter inside
      *
@@ -21,7 +25,7 @@ public class FloattoTextConverter extends NumberConverter {
         String result = "";
         for (String part : parts) {
             try {
-                float number = parseFloat(part);
+                double number = parseDouble(part);
                 result += convertFloat(number) + " ";
             } catch (NumberFormatException e) {
                 result += part + " ";
@@ -31,6 +35,7 @@ public class FloattoTextConverter extends NumberConverter {
         return result;
     }
 
+
     /**
      * Converts a float number to text representation
      *
@@ -38,6 +43,7 @@ public class FloattoTextConverter extends NumberConverter {
      * @return the text representation of the float number
      */
     private String convertFloat(float number) {
+        //logger.debug("Number is: " + number);
         if (number == 0.0) {
             return "zero";
         }
@@ -49,7 +55,10 @@ public class FloattoTextConverter extends NumberConverter {
             return "minus " + convertFloat(-number);
         }
 
-        int newnum = (int) (number * 1000);
+
+        //logger.debug("Float accuracy up to a thousandths");
+        int newnum = (int)(number * 1000);
+
         if (newnum % 100 == 0) {
             return convertNumber(newnum / 100) + " tenths";
         }
