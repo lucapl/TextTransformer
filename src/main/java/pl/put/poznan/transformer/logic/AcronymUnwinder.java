@@ -15,6 +15,11 @@ public class AcronymUnwinder extends TextDecorator {
         super(wrapee);
         manager = new AcronymManager();
     }
+
+    void setAcronymManager(AcronymManager man) {
+        manager = man;
+    }
+
     @Override
     public String trueConvert(String text) {
         return manager.unwindAcronyms(text);
