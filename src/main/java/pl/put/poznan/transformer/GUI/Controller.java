@@ -3,13 +3,20 @@ package pl.put.poznan.transformer.GUI;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import pl.put.poznan.transformer.logic.TextTransformer;
 
 import java.io.File;
+
+import java.io.IOException;
+import java.nio.file.Files;
+
 import java.util.Arrays;
 import java.util.List;
+
 
 public class Controller {
     @FXML
@@ -27,8 +34,12 @@ public class Controller {
         File file = fileChooser.showOpenDialog(null);
 
         if (file != null) {
-            // Read the file and populate the text area
-            // Code to read the file content and set it to the text area goes here
+            try {
+                String content = new String(Files.readAllBytes(file.toPath()));
+                textToEdit.setText(content);
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
         }
     }
 
@@ -41,6 +52,18 @@ public class Controller {
             // Save the text area content to the file
             // Code to save the text area content to the file goes here
         }
+    }
+
+    public void copySelectedText() {
+        String selectedText = textToEdit.getSelectedText();
+        if (!selectedText.isEmpty()) {
+            Clipboard clipboard = Clipboard.getSystemClipboard();
+            ClipboardContent content = new ClipboardContent();
+            content.putString(selectedText);
+            clipboard.setContent(content);
+            outputTextTransformer.setText("Chosen text: \n" + selectedText);
+        }
+
     }
 
     public void saveFileAs(ActionEvent e) {}
