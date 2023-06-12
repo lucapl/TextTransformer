@@ -44,14 +44,14 @@ public class Controller {
     public MenuItem saveAsItem;
 
     /**
-     * Function for setting up things which needs to be set up after launch of application
+     * Function for setting up things which need to be set up after the launch of the application.
      */
     public void setup() {
         setAccelerator(saveButton, KeyCode.S);
     }
 
     /**
-     * Function for setting up things which needs to be set up before staring main application
+     * Function for setting up things which need to be set up before starting the main application.
      */
     public void preSetup() {
         saveAsItem.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.SHIFT_DOWN, KeyCombination.CONTROL_DOWN));
@@ -62,6 +62,10 @@ public class Controller {
 
     private File currentFile;
 
+    /**
+     * Opens a text file and loads its content into the textToEdit TextArea.
+     * @param e the ActionEvent triggered by the openFile MenuItem or button.
+     */
     public void openFile(ActionEvent e) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Text File");
@@ -77,6 +81,11 @@ public class Controller {
         }
     }
 
+    /**
+     * Saves the current content of the textToEdit TextArea to a file.
+     * If there is no currentFile, prompts the user to choose a file to save.
+     * @param e the ActionEvent triggered by the saveFile MenuItem or button.
+     */
     public void saveFile(ActionEvent e) {
         if (currentFile != null) {
             try {
@@ -92,6 +101,10 @@ public class Controller {
         }
     }
 
+    /**
+     * Prompts the user to choose a file and saves the content of the textToEdit TextArea to that file.
+     * @param e the ActionEvent triggered by the saveAsItem MenuItem.
+     */
     public void saveFileAs(ActionEvent e) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save Text File");
@@ -113,6 +126,10 @@ public class Controller {
         }
     }
 
+    /**
+     * Copies the selected text in the textToEdit TextArea to the system clipboard.
+     * Also updates the outputTextTransformer Text with the chosen text.
+     */
     public void copySelectedText() {
         String selectedText = textToEdit.getSelectedText();
         if (!selectedText.isEmpty()) {
@@ -120,34 +137,47 @@ public class Controller {
             ClipboardContent content = new ClipboardContent();
             content.putString(selectedText);
             clipboard.setContent(content);
-            outputTextTransformer.setText("Chosen text: \n" + selectedText);
+            outputTextTransformer.setText("Chosen text:\n" + selectedText);
         }
-
     }
 
-
-    private void transformText(String input, List<String> transforms){
-        TextTransformer textTransformer = new TextTransformer(transforms);
-        outputTextTransformer.setText(textTransformer.transform(input));
-    }
+    /**
+     * Transforms the text in the textToEdit TextArea using the specified transformations.
+     * @param e the ActionEvent triggered by the applyTransform button.
+     */
     public void applyTransform(ActionEvent e) {
         transformText(textToEdit.getText(), Arrays.asList(textTransforms.getText().split(",")));
     }
 
-    public void createNewFile(ActionEvent e) {}
+    /**
+     * Transforms the input text using the specified transformations and updates the outputTextTransformer Text.
+     * @param input the input text to transform.
+     * @param transforms the list of transformations to apply.
+     */
+    private void transformText(String input, List<String> transforms) {
+        TextTransformer textTransformer = new TextTransformer(transforms);
+        outputTextTransformer.setText(textTransformer.transform(input));
+    }
 
+    public void createNewFile(ActionEvent e) {
+    }
+
+    /**
+     * Exits the application.
+     * @param e the ActionEvent triggered by the exit MenuItem or button.
+     */
     public void exit(ActionEvent e) {
         System.exit(0);
     }
 
     /**
-     * Sets keyboard shortcut for Ctrl+KeyCode(key) to "click" given button
-     * @param button button to be pushed
-     * @param key key to be pressed in shortcut
+     * Sets a keyboard shortcut for Ctrl+KeyCode(key) to "click" the given button.
+     * @param button the button to be clicked.
+     * @param key the key to be pressed in the shortcut.
      */
     private void setAccelerator(Button button, KeyCode key) {
-        if(button==null) {
-            System.out.println("Button is null! "); // check that the button was injected properly through your fxml
+        if (button == null) {
+            System.out.println("Button is null!"); // Check that the button was injected properly through your fxml
         }
         Scene scene = button.getScene();
         if (scene == null) {
@@ -158,11 +188,11 @@ public class Controller {
                 new KeyCodeCombination(key, KeyCombination.SHORTCUT_DOWN),
                 new Runnable() {
                     @FXML public void run() {
-
                         button.fire();
                     }
                 }
         );
     }
 }
+
 

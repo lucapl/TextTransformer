@@ -19,7 +19,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Main.primaryStage=primaryStage;
+        Main.primaryStage = primaryStage;
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/UI.fxml"));
         BorderPane page = (BorderPane) loader.load();
@@ -44,4 +44,5 @@ public class Main extends Application {
         launch(args);
     }
 }
+
 
