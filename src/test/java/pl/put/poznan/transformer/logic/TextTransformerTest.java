@@ -125,4 +125,53 @@ class TextTransformerTest {
                 "$\\NO$\\ SHtDERdNUH Owt YTFIf &\\ XiS Ytfif HTIM$\\ NhOÏJ ÂÂÂ,NHâj NHoj",
                 textTransformer.transform("John Jâhn,âââ Jïohn $mith 56 56 & 0.52 $on$"));
     }
+
+    @Test
+    public void upperTest(){
+        List<String> transforms = Arrays.asList("up");
+        transformer.setTransforms(transforms);
+
+        assertEquals("UPPER", transformer.transform("upper").strip());
+
+        verify(textConverterFactory).createConverter(transforms);
+    }
+    @Test
+    public void lowerTest(){
+        List<String> transforms = Arrays.asList("low");
+        transformer.setTransforms(transforms);
+
+        assertEquals("lower", transformer.transform("Lower").strip());
+
+        verify(textConverterFactory).createConverter(transforms);
+    }
+
+    @Test
+    public void capTest(){
+        List<String> transforms = Arrays.asList("cap");
+        transformer.setTransforms(transforms);
+
+        assertEquals("Capitalize Text", transformer.transform("capitalize text").strip());
+
+        verify(textConverterFactory).createConverter(transforms);
+    }
+
+    @Test
+    public void reverseTest(){
+        List<String> transforms = Arrays.asList("rev");
+        transformer.setTransforms(transforms);
+
+        assertEquals("esreveR", transformer.transform("Reverse").strip());
+
+        verify(textConverterFactory).createConverter(transforms);
+    }
+
+    @Test
+    public void reversePreserveCaseTest(){
+        List<String> transforms = Arrays.asList("rev_no_case");
+        transformer.setTransforms(transforms);
+
+        assertEquals("KerIm", transformer.transform("MirEk").strip());
+
+        verify(textConverterFactory).createConverter(transforms);
+    }
 }
