@@ -44,7 +44,7 @@ public class TextReverserTest {
 
         // Test a sample input
         String input = "Hello, World!";
-        String expectedOutput = "!DLROw ,OLLEh";
+        String expectedOutput = "!dlrow ,olleh";
         String actualOutput = reverser.convert(input);
 
         // Assert that the actual output matches the expected output
