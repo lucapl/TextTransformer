@@ -7,10 +7,16 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import pl.put.poznan.transformer.logic.TextTransformer;
 
 import java.io.File;
+
 import java.io.IOException;
 import java.nio.file.Files;
+
+import java.util.Arrays;
+import java.util.List;
+
 
 public class Controller {
     @FXML
@@ -62,7 +68,13 @@ public class Controller {
 
     public void saveFileAs(ActionEvent e) {}
 
-    public void applyTransform(ActionEvent e) {}
+    private void transformText(String input, List<String> transforms){
+        TextTransformer textTransformer = new TextTransformer(transforms);
+        outputTextTransformer.setText(textTransformer.transform(input));
+    }
+    public void applyTransform(ActionEvent e) {
+        transformText(textToEdit.getText(), Arrays.asList(textTransforms.getText().split(",")));
+    }
 
     public void createNewFile(ActionEvent e) {}
 
