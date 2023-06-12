@@ -18,7 +18,7 @@ For people working with text data, our Text Transformer application will allow y
 The app offers a graphical user interface where a text can be input 
 and transformations can be specified. It works in the same manner as the REST API.
 
-![gui](https://i.imgur.com/cUNjSOZ.png)
+![gui2](https://github.com/lucapl/TextTransformer/assets/107052397/ea1e3ab6-3106-48f7-9a54-f13ca0f7039f)
 
 The GUI is also capable of opening and saving simple text files.
 

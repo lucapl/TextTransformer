@@ -13,8 +13,8 @@
 
     <groupId>pl.put.poznan</groupId>
     <artifactId>text-transformer</artifactId>
-    <version>1.4.1</version>
 
+    <version>1.6.0</version>
 
 	<properties>
         <java.version>14</java.version>

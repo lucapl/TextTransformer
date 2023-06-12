@@ -16,6 +16,10 @@ public class Acronymizer extends TextDecorator {
         manager = new AcronymManager();
     }
 
+    public void setAcronymManager(AcronymManager man) {
+        manager = man;
+    }
+
     @Override
     public String trueConvert(String text) {
         // Perform acronymization using the AcronymManager

@@ -14,6 +14,12 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import pl.put.poznan.transformer.logic.TextTransformer;
 
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+
+import java.nio.file.Files;
+import java.util.Scanner;
+import java.util.logging.Logger;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -21,12 +27,18 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import java.io.IOException;
+
 import java.nio.file.Files;
+import java.util.Scanner;
+import java.util.logging.Logger;
+
 
 import java.util.Arrays;
 import java.util.List;
 
-
+/**
+ * Controls the working of the GUI
+ */
 public class Controller {
     @FXML
     private TextArea textToEdit;
@@ -36,18 +48,24 @@ public class Controller {
 
     @FXML
     private Text outputTextTransformer;
-
+   
     @FXML
     private Button saveButton;
 
     @FXML
-    public MenuItem saveAsItem;
+    private MenuItem saveAsItem;
+
+    @FXML
+    private Button openButton;
+
+    private File currentFile;
 
     /**
      * Function for setting up things which need to be set up after the launch of the application.
      */
     public void setup() {
         setAccelerator(saveButton, KeyCode.S);
+        setAccelerator(openButton, KeyCode.O);
     }
 
     /**
@@ -60,6 +78,7 @@ public class Controller {
         });
     }
 
+
     private File currentFile;
 
     /**
@@ -70,11 +89,20 @@ public class Controller {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Text File");
         File file = fileChooser.showOpenDialog(null);
-
         if (file != null) {
+            textToEdit.clear();
             try {
-                String content = new String(Files.readAllBytes(file.toPath()));
-                textToEdit.setText(content);
+                FileInputStream fileReader = new FileInputStream(file);
+                InputStreamReader isr = new InputStreamReader(fileReader, StandardCharsets.UTF_8);
+                BufferedReader bufferedReader = new BufferedReader(isr);
+
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    textToEdit.appendText(line+'\n');
+                }
+
+                // Close the file reader
+                bufferedReader.close();
             } catch (IOException exception) {
                 exception.printStackTrace();
             }
@@ -90,7 +118,7 @@ public class Controller {
         if (currentFile != null) {
             try {
                 FileWriter writer = new FileWriter(currentFile);
-                writer.write(textToEdit.getText());
+                writer.write(outputTextTransformer.getText());
                 writer.close();
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -113,7 +141,7 @@ public class Controller {
         if (file != null) {
             try {
                 FileWriter writer = new FileWriter(file);
-                writer.write(textToEdit.getText());
+                writer.write(outputTextTransformer.getText());
                 writer.close();
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -137,16 +165,15 @@ public class Controller {
             ClipboardContent content = new ClipboardContent();
             content.putString(selectedText);
             clipboard.setContent(content);
-            outputTextTransformer.setText("Chosen text:\n" + selectedText);
+          
+            transformText(selectedText);//"Chosen text: \n" + selectedText);
         }
     }
 
-    /**
-     * Transforms the text in the textToEdit TextArea using the specified transformations.
-     * @param e the ActionEvent triggered by the applyTransform button.
-     */
-    public void applyTransform(ActionEvent e) {
-        transformText(textToEdit.getText(), Arrays.asList(textTransforms.getText().split(",")));
+    
+
+    private void transformText(String input){
+        transformText(input,Arrays.asList(textTransforms.getText().split(",")));
     }
 
     /**
@@ -157,6 +184,14 @@ public class Controller {
     private void transformText(String input, List<String> transforms) {
         TextTransformer textTransformer = new TextTransformer(transforms);
         outputTextTransformer.setText(textTransformer.transform(input));
+    }
+
+    /**
+     * Transforms the text in the textToEdit TextArea using the specified transformations.
+     * @param e the ActionEvent triggered by the applyTransform button.
+     */
+    public void applyTransform(ActionEvent e) {
+        transformText(textToEdit.getText());
     }
 
     public void createNewFile(ActionEvent e) {

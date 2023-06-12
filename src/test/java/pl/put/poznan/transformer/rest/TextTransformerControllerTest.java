@@ -30,6 +30,7 @@ class TextTransformerControllerTest {
         when(arg1.asText()).thenReturn("up");
         args = mock(ArrayNode.class);
         when(args.elements()).thenReturn(Collections.singletonList(arg1).iterator());
+        when(args.toString()).thenReturn("[\"up\"]");
         payload = mock(JsonNode.class);
         when(payload.get("text")).thenReturn(text);
         when(payload.get("transforms")).thenReturn(args);
@@ -37,7 +38,7 @@ class TextTransformerControllerTest {
 
     @Test
     public void testPayloadGetting() throws JsonProcessingException {
-        rest.get(payload);
+        assertEquals("{\"output\":\"CONVERSION TEST\",\"input\":\"conversion test\",\"used_transforms\"}",rest.get(payload));
         // test if "text" field read from payload
         verify(payload).get("text");
         // test if "transforms" field read from payload
@@ -46,9 +47,11 @@ class TextTransformerControllerTest {
 
     @Test
     public void testPayloadArgumentConversion() throws JsonProcessingException {
-        rest.get(payload);
+        assertEquals("{\"output\":\"CONVERSION TEST\",\"input\":\"conversion test\",\"used_transforms\"}",rest.get(payload));
         // test if text field converted to string
         verify(text,atLeast(1)).asText();
+        // test if transforms field was iterated over
+        verify(args,atLeast(1)).elements();
         // test if transforms arguments converted to text
         verify(arg1,times(1)).asText();
     }
