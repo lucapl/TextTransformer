@@ -37,7 +37,7 @@ class TextTransformerControllerTest {
 
     @Test
     public void testPayloadGetting() throws JsonProcessingException {
-        rest.get(payload);
+        assertEquals("{\"output\":\"CONVERSION TEST\",\"input\":\"conversion test\",\"used_transforms\":[\"up\"]}",rest.get(payload));
         // test if "text" field read from payload
         verify(payload).get("text");
         // test if "transforms" field read from payload
@@ -46,7 +46,7 @@ class TextTransformerControllerTest {
 
     @Test
     public void testPayloadArgumentConversion() throws JsonProcessingException {
-        rest.get(payload);
+        assertEquals("{\"output\":\"CONVERSION TEST\",\"input\":\"conversion test\",\"used_transforms\":[\"up\"]}",rest.get(payload));
         // test if text field converted to string
         verify(text,atLeast(1)).asText();
         // test if transforms field was iterated over

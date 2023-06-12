@@ -2,33 +2,58 @@ package pl.put.poznan.transformer.logic;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pl.put.poznan.transformer.logic.decorator.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 /**
  * Test the behaviour of the TextTransformer
  */
 class TextTransformerTest {
 
+    private TextTransformer transformer;
+    private TextConverterFactory textConverterFactory;
+    @BeforeEach
+    public void setup(){
+        textConverterFactory = mock(TextConverterFactory.class);
+        when(textConverterFactory.createConverter(Arrays.asList("unrepeat"))).thenReturn(new RepeatsRemover(null));
+        when(textConverterFactory.createConverter(Arrays.asList("latex"))).thenReturn(new LatexAdapter(null));
+        when(textConverterFactory.createConverter(Arrays.asList("reals"))).thenReturn(new FloattoTextConverter(null));
+        when(textConverterFactory.createConverter(Arrays.asList("integers"))).thenReturn(new InttoTextConverter(null));
+        when(textConverterFactory.createConverter(Arrays.asList("rev_no_case"))).thenReturn(new TextReverser(null,Conversions.REVERSE_PRESERVE_CASE));
+        when(textConverterFactory.createConverter(Arrays.asList("rev"))).thenReturn(new TextReverser(null,Conversions.REVERSE));
+        when(textConverterFactory.createConverter(Arrays.asList("up"))).thenReturn(new TextCapitalizer(null,Conversions.CASE_UPPER));
+        when(textConverterFactory.createConverter(Arrays.asList("low"))).thenReturn(new TextCapitalizer(null,Conversions.CASE_LOWER));
+        when(textConverterFactory.createConverter(Arrays.asList("cap"))).thenReturn(new TextCapitalizer(null,Conversions.CASE_CAPITAL));
+        when(textConverterFactory.createConverter(Arrays.asList("acr"))).thenReturn(new Acronymizer(null));
+        when(textConverterFactory.createConverter(Arrays.asList("unwind"))).thenReturn(new AcronymUnwinder(null));
+        transformer = new TextTransformer(null);
+        transformer.setTextConverterFactory(textConverterFactory);
+    }
+
     /**
      * Test the repeated remover transformer
      */
     @Test
     public void repeaterRemoverTest(){
-        TextTransformer unrepeat = new TextTransformer(Arrays.asList("unrepeat"));
+        List<String> transforms = Arrays.asList("unrepeat");
+        transformer.setTransforms(transforms);
         // convert two repeated words to one
-        assertEquals("to", unrepeat.transform("to to").strip());
+        assertEquals("to", transformer.transform("to to").strip());
         // convert any number of repeated words
-        assertEquals("to", unrepeat.transform("to to to").strip());
+        assertEquals("to", transformer.transform("to to to").strip());
         // replace all repetitions in test
-        assertEquals("to after", unrepeat.transform("to to after after").strip());
-        assertEquals("Your bread eat sticks", unrepeat.transform("Your bread bread bread eat sticks sticks").strip());
+        assertEquals("to after", transformer.transform("to to after after").strip());
+        assertEquals("Your bread eat sticks", transformer.transform("Your bread bread bread eat sticks sticks").strip());
         // test for exotic UTF-8 characters
-        assertEquals("Ϻ", unrepeat.transform("Ϻ Ϻ Ϻ Ϻ Ϻ Ϻ").strip());
+        assertEquals("Ϻ", transformer.transform("Ϻ Ϻ Ϻ Ϻ Ϻ Ϻ").strip());
+
+        verify(textConverterFactory,times(5)).createConverter(transforms);
     }
 
     /**
@@ -36,14 +61,17 @@ class TextTransformerTest {
      */
     @Test
     public void latexAdapterTest(){
-        TextTransformer latex = new TextTransformer(Arrays.asList("latex"));
+        List<String> transforms = Arrays.asList("latex");
+        transformer.setTransforms(transforms);
         // test & -> \&
-        assertEquals("\\&",latex.transform("&"));
+        assertEquals("\\&",transformer.transform("&"));
         // test $ -> \$
-        assertEquals("\\$",latex.transform("$"));
+        assertEquals("\\$",transformer.transform("$"));
         // test in context
-        assertEquals("John Smith \\& Sons",latex.transform("John Smith & Sons"));
-        assertEquals("what is \\$delta",latex.transform("what is $delta"));
+        assertEquals("John Smith \\& Sons",transformer.transform("John Smith & Sons"));
+        assertEquals("what is \\$delta",transformer.transform("what is $delta"));
+
+        verify(textConverterFactory,times(4)).createConverter(transforms);
     }
 
     /**
@@ -51,12 +79,16 @@ class TextTransformerTest {
      */
     @Test
     public void floatConverterTest() {
-        TextTransformer floatConverter = new TextTransformer(Arrays.asList("reals"));
-        assertEquals("zero ", floatConverter.transform("0"));
-        assertEquals("minus two tenths ", floatConverter.transform("-0.2"));
-        assertEquals("one thousandths ", floatConverter.transform("0.001"));
-        assertEquals("five and twenty three hundredths ", floatConverter.transform("5.23"));
-        assertEquals("one hundred twenty three thousandths ", floatConverter.transform("0.123"));
+        List<String> transforms = Arrays.asList("reals");
+        transformer.setTransforms(transforms);
+
+        assertEquals("zero ", transformer.transform("0"));
+        assertEquals("minus two tenths ", transformer.transform("-0.2"));
+        assertEquals("one thousandths ", transformer.transform("0.001"));
+        assertEquals("five and twenty three hundredths ", transformer.transform("5.23"));
+        assertEquals("one hundred twenty three thousandths ", transformer.transform("0.123"));
+
+        verify(textConverterFactory,times(5)).createConverter(transforms);
     }
 
     /**
@@ -64,12 +96,16 @@ class TextTransformerTest {
      */
     @Test
     public void intConverterTest() {
-        TextTransformer intConverter = new TextTransformer(Arrays.asList("integers"));
-        assertEquals("zero ", intConverter.transform("0"));
-        assertEquals("minus twenty three ", intConverter.transform("-23"));
-        assertEquals("one thousand thirty five ", intConverter.transform("1035"));
-        assertEquals("five ", intConverter.transform("5"));
-        assertEquals("one hundred twenty three ", intConverter.transform("123"));
+        List<String> transforms = Arrays.asList("integers");
+        transformer.setTransforms(transforms);
+
+        assertEquals("zero ", transformer.transform("0"));
+        assertEquals("minus twenty three ", transformer.transform("-23"));
+        assertEquals("one thousand thirty five ", transformer.transform("1035"));
+        assertEquals("five ", transformer.transform("5"));
+        assertEquals("one hundred twenty three ", transformer.transform("123"));
+
+        verify(textConverterFactory,times(5)).createConverter(transforms);
     }
 
     /**

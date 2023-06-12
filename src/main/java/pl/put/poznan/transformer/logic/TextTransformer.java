@@ -18,7 +18,7 @@ public class TextTransformer {
     /**
      * The transformations to be performed based on the request
      */
-    private final List<String> transforms;
+    private List<String> transforms;
 
     /**
      * Creates the transformer
@@ -43,5 +43,13 @@ public class TextTransformer {
         TextConverter textConverter = textConverterFactory.createConverter(transforms);
         logger.debug("Requesting text conversion from the converter");
         return textConverter.convert(text);
+    }
+
+    public void setTextConverterFactory(TextConverterFactory textConverterFactory){
+        this.textConverterFactory = textConverterFactory;
+    }
+
+    public void setTransforms(List<String> transforms){
+        this.transforms = transforms;
     }
 }
