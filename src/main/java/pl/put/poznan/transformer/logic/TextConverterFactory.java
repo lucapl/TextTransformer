@@ -116,7 +116,7 @@ public class TextConverterFactory {
             case REMOVE_REPEATS: return new RepeatsRemover(null);
             case LATEX: return new LatexAdapter(null);
             default:
-                logger.info("Empty convesrions, creating empty converter");
+                logger.info("Empty conversions, creating empty converter");
                 return new TextDecorator(null){
                 @Override
                 public String trueConvert(String text){
