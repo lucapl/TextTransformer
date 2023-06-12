@@ -6,12 +6,12 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import pl.put.poznan.transformer.logic.decorator.TextDecorator;
 
-class AcronymizerTest {
-    private Acronymizer acronymizer;
+class AcronymUnwinderTest {
+    private AcronymUnwinder unwinder;
 
     @BeforeEach
     public void setup() {
-        acronymizer = new Acronymizer(null);
+        unwinder = new AcronymUnwinder(null);
     }
 
     @Test
@@ -19,20 +19,18 @@ class AcronymizerTest {
         AcronymManager mockedManager = Mockito.mock(AcronymManager.class);
 
         // Set up the desired behavior of the mock
-        Mockito.when(mockedManager.acronymize("For example")).thenReturn("I.e.");
+        Mockito.when(mockedManager.unwindAcronyms("Doc.")).thenReturn("Doctor");
 
-        // Create an instance of Acronymizer with the mocked AcronymManager
-        acronymizer = new Acronymizer(null);
-        acronymizer.setAcronymManager(mockedManager);
+        unwinder.setAcronymManager(mockedManager);
 
         // Call the trueConvert method with a sample input
-        String result = acronymizer.convert("For example");
+        String result = unwinder.convert("Doc.");
 
         // Verify that the mocked method was called with the correct input
-        Mockito.verify(mockedManager).acronymize("For example");
+        Mockito.verify(mockedManager).unwindAcronyms("Doc.");
 
         // Assert the result
-        Assertions.assertEquals("I.e.", result);
+        Assertions.assertEquals("Doctor", result);
     }
 
     @Test
@@ -40,21 +38,21 @@ class AcronymizerTest {
         AcronymManager mockedManager = Mockito.mock(AcronymManager.class);
 
         // Set up the desired behavior of the mock
-        Mockito.when(mockedManager.acronymize("For example")).thenReturn("I.e.");
+        Mockito.when(mockedManager.unwindAcronyms("Doc.")).thenReturn("Doctor");
 
         // Create an instance of Acronymizer with the mocked AcronymManager
-        acronymizer = new Acronymizer(null);
+        unwinder = new AcronymUnwinder(null);
 
         TextDecorator wrapee = Mockito.mock(TextDecorator.class);
-        Mockito.when(wrapee.convert("I.e.")).thenReturn("Nice.");
+        Mockito.when(wrapee.convert("Doctor")).thenReturn("Nice.");
 
-        acronymizer = new Acronymizer(wrapee);
-        acronymizer.setAcronymManager(mockedManager);
-        String result = acronymizer.convert("For example");
+        unwinder = new AcronymUnwinder(wrapee);
+        unwinder.setAcronymManager(mockedManager);
+        String result = unwinder.convert("Doc.");
 
-        Mockito.verify(mockedManager).acronymize("For example");
+        Mockito.verify(mockedManager).unwindAcronyms("Doc.");
 
-        Mockito.verify(wrapee).convert("I.e.");
+        Mockito.verify(wrapee).convert("Doctor");
 
         Assertions.assertEquals("Nice.", result);
     }
