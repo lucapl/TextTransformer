@@ -4,14 +4,31 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+
+    public static Stage primaryStage;
+
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/UI.fxml"));
-        primaryStage.setTitle("Text Editor");
-        primaryStage.setScene(new Scene(root));
+        Main.primaryStage=primaryStage;
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/UI.fxml"));
+        BorderPane page = (BorderPane) loader.load();
+
+        Controller controller = loader.getController();
+
+        Scene scene = new Scene(page);
+
+        primaryStage.setTitle("TextTransformer GUI");
+        primaryStage.setScene(scene);
+
+        primaryStage.setOnShown(event -> {
+            controller.setup();
+        });
+
         primaryStage.show();
     }
 

@@ -7,13 +7,15 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class Controller {
     @FXML
@@ -27,6 +29,10 @@ public class Controller {
 
     @FXML
     private Button saveButton;
+
+    public void setup() {
+        setAccelerator(saveButton, KeyCode.S);
+    }
 
     private File currentFile;
 
@@ -84,6 +90,31 @@ public class Controller {
 
     public void exit(ActionEvent e) {
         System.exit(0);
+    }
+
+    /**
+     * Sets keyboard shortcut for Ctrl+KeyCode(key) to "click" given button
+     * @param button button to be pushed
+     * @param key key to be pressed in shortcut
+     */
+    private void setAccelerator(Button button, KeyCode key) {
+        if(button==null) {
+            System.out.println("Button is null! "); // check that the button was injected properly through your fxml
+        }
+        Scene scene = button.getScene();
+        if (scene == null) {
+            throw new IllegalArgumentException("setSaveAccelerator must be called when a button is attached to a scene");
+        }
+
+        scene.getAccelerators().put(
+                new KeyCodeCombination(key, KeyCombination.SHORTCUT_DOWN),
+                new Runnable() {
+                    @FXML public void run() {
+
+                        button.fire();
+                    }
+                }
+        );
     }
 }
 
