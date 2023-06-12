@@ -59,4 +59,3 @@ public class FloattoTextConverter extends NumberConverter {
         return convertNumber(newnum) + " thousandths";
     }
 }
-//checking

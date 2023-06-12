@@ -16,6 +16,7 @@ public abstract class NumberConverter extends TextDecorator {
     public NumberConverter(TextConverter wrappee) {
         super(wrappee);
     }
+    //vxdc
 
     /**
      * Converts an integer number to its text representation
