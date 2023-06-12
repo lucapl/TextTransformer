@@ -8,6 +8,9 @@ import java.util.regex.Pattern;
 public class AcronymManager {
     private HashMap<String, String> acronyms;
 
+    /**
+     * Initializes the AcronymManager with predefined acronyms and their expansions.
+     */
     AcronymManager() {
         acronyms = new HashMap<>();
         acronyms.put("for example", "e.g.");
@@ -17,6 +20,11 @@ public class AcronymManager {
         acronyms.put("doctor", "dr.");
     }
 
+    /**
+     * Retrieves a mapping of expansions to acronyms.
+     *
+     * @return a HashMap containing the expansions as keys and the acronyms as values
+     */
     private HashMap<String, String> getExpansions() {
         HashMap<String, String> expansions = new HashMap<>();
 
@@ -28,10 +36,11 @@ public class AcronymManager {
     }
 
     /**
-     * Replaces keys in mapping with values
-     * @param mapping
-     * @param text
-     * @return
+     * Replaces keys in the mapping with their corresponding values in the given text.
+     *
+     * @param mapping a HashMap containing the mapping of acronyms and their expansions
+     * @param text    the text in which the replacements will be performed
+     * @return the text with the replacements applied
      */
     private String applyMapping(HashMap<String, String> mapping, String text) {
         StringBuffer result = new StringBuffer(text);
@@ -46,7 +55,7 @@ public class AcronymManager {
             result = new StringBuffer();
             while (matcher.find()) {
                 String match = matcher.group();
-                matcher.appendReplacement(result, getRightCase(match, replacement) );
+                matcher.appendReplacement(result, getRightCase(match, replacement));
             }
             matcher.appendTail(result);
         }
@@ -54,6 +63,13 @@ public class AcronymManager {
         return result.toString();
     }
 
+    /**
+     * Returns the replacement with the correct casing based on the casing of the matched acronym.
+     *
+     * @param match       the matched acronym in the text
+     * @param replacement the replacement value for the acronym
+     * @return the replacement with the correct casing
+     */
     private String getRightCase(String match, String replacement) {
         if (Character.isUpperCase(match.charAt(0))) {
             if (replacement.length() < 2) {
@@ -69,20 +85,23 @@ public class AcronymManager {
     }
 
     /**
-     * Replaces acronyms with their unwind versions
-     * @param text text on replacements will be performed
-     * @return
+     * Replaces acronyms with their expanded versions in the given text.
+     *
+     * @param text the text in which the replacements will be performed
+     * @return the text with the acronyms expanded
      */
     public String unwindAcronyms(String text) {
         return applyMapping(getExpansions(), text);
     }
 
     /**
-     * Replaces unwind acronyms with their short versions
-     * @param text text on replacements will be performed
-     * @return
+     * Replaces expanded acronyms with their short versions in the given text.
+     *
+     * @param text the text in which the replacements will be performed
+     * @return the text with the acronyms replaced by their short versions
      */
     public String acronymize(String text) {
         return applyMapping(acronyms, text);
     }
 }
+

@@ -11,12 +11,19 @@ public class AcronymUnwinder extends TextDecorator {
 
     private AcronymManager manager;
 
-    AcronymUnwinder(TextConverter wrapee) {
-        super(wrapee);
+    /**
+     * Initializes the AcronymUnwinder with a TextConverter and creates an instance of AcronymManager.
+     *
+     * @param wrappee the TextConverter instance to be wrapped by the decorator
+     */
+    AcronymUnwinder(TextConverter wrappee) {
+        super(wrappee);
         manager = new AcronymManager();
     }
+
     @Override
     public String trueConvert(String text) {
         return manager.unwindAcronyms(text);
     }
 }
+
