@@ -47,6 +47,32 @@ class TextTransformerTest {
     }
 
     /**
+     * Test the FloattoTextConverter transformer
+     */
+    @Test
+    public void floatConverterTest() {
+        TextTransformer floatConverter = new TextTransformer(Arrays.asList("reals"));
+        assertEquals("zero ", floatConverter.transform("0"));
+        assertEquals("minus two tenths ", floatConverter.transform("-0.2"));
+        assertEquals("one thousandths ", floatConverter.transform("0.001"));
+        assertEquals("five and twenty three hundredths ", floatConverter.transform("5.23"));
+        assertEquals("one hundred twenty three thousandths ", floatConverter.transform("0.123"));
+    }
+
+    /**
+     * Test the InttoTextConverter transformer
+     */
+    @Test
+    public void intConverterTest() {
+        TextTransformer intConverter = new TextTransformer(Arrays.asList("integers"));
+        assertEquals("zero ", intConverter.transform("0"));
+        assertEquals("minus twenty three ", intConverter.transform("-23"));
+        assertEquals("one thousand thirty five ", intConverter.transform("1035"));
+        assertEquals("five ", intConverter.transform("5"));
+        assertEquals("one hundred twenty three ", intConverter.transform("123"));
+    }
+
+    /**
      * Test multiple transforms
      */
     @Test
