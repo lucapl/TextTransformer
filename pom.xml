@@ -14,7 +14,7 @@
     <groupId>pl.put.poznan</groupId>
     <artifactId>text-transformer</artifactId>
 
-    <version>1.6.0</version>
+    <version>1.6.1</version>
 
 	<properties>
         <java.version>14</java.version>
@@ -78,7 +78,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>pl.put.poznan.transformer.GUI.Main</mainClass>
+                    <mainClass>pl.put.poznan.transformer.app.TextTransformerApplication</mainClass>
                 </configuration>
             </plugin>        
             <plugin>

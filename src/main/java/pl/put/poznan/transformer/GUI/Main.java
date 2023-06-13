@@ -13,9 +13,9 @@ import javafx.stage.Stage;
 
 import java.awt.*;
 
-public class Main extends Application {
+public class Main {
 
-    public static Stage primaryStage;
+   /* public static Stage primaryStage;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -42,6 +42,6 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
-    }
+    }*/
 }
 
